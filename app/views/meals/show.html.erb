@@ -7,7 +7,7 @@
 
 <p>
 ingredients:
-  <% @meal.ingredients.map(&:name) %>
+  <%= @meal.ingredients.map(&:name) %>
 </p>
 
 <%= link_to 'Edit', edit_meal_path(@meal) %> |

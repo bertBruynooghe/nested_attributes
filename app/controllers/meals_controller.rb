@@ -14,19 +14,17 @@ class MealsController < ApplicationController
 
   # GET /meals/new
   def new
-    @meal = Form::Meal.new(Meal.new)
+    @meal = Meal.new
   end
 
   # GET /meals/1/edit
   def edit
-    @meal = Form::Meal.new(@meal)
   end
 
   # POST /meals
   # POST /meals.json
   def create
-    @meal = Form::Meal(Meal.new(meal_params))
-
+    @meal = Meal.new(meal_params)
     respond_to do |format|
       if @meal.save
         format.html { redirect_to @meal, notice: 'Meal was successfully created.' }
@@ -41,7 +39,6 @@ class MealsController < ApplicationController
   # PATCH/PUT /meals/1
   # PATCH/PUT /meals/1.json
   def update
-    @meal = Form::Meal.new(@meal)
     @meal.assign_attributes(meal_params)
     respond_to do |format|
       if @meal.save(meal_params)
@@ -72,6 +69,6 @@ class MealsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meal_params
-      params.require(:meal).permit(:consumption_time, :commit, ingredients_attributes: [:name])
-    end
+      params.require(:meal).permit(:consumption_time, :new_ingredient, :create_ingredient, ingredients_attributes: %i(name id))
+    end 
 end
