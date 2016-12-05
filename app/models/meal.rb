@@ -8,7 +8,7 @@ class Meal < ApplicationRecord
   def assign_attributes(attributes)
     @new_ingredient = attributes[:new_ingredient]
     @create_ingredient = attributes[:create_ingredient]
-    super attributes.select{ |k, _| Meal.attribute_names.include?(k) }
+    super attributes.select{ |k, _| [*Meal.attribute_names, 'ingredients_attributes'].include?(k) }
   end
 
   def save(*args)

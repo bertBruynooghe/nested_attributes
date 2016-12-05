@@ -1,0 +1,9 @@
+<%= form_for(meal) do |meal_form| %>
+  <%= meal_form.hidden_field :consumption_time %>
+  <%= meal_form.fields_for :ingredients do |ingredient_form| %>
+    <%= ingredient_form.hidden_field(:name) %>
+  <% end %>
+  <input type="text"  name="meal[ingredients_attributes][<%= meal.ingredients.length %>][name]" value=<%= ingredient.name %> >
+  <%= meal_form.submit name: 'meal[create_ingredient]', value: 'add ingredient' %>
+  <%= meal_form.submit type: :reset, value: 'reset' %>
+<% end %>
