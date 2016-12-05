@@ -3,16 +3,34 @@ class Meal < ApplicationRecord
   accepts_nested_attributes_for :ingredients, allow_destroy: true
 
   ### form stuff from here on
-  attr_reader :new_ingredient
+  attr_reader :ingredient_index
+  attr_reader :ingredient_action
 
-  def assign_attributes(attributes)
-    @new_ingredient = attributes[:new_ingredient]
-    @create_ingredient = attributes[:create_ingredient]
-    super attributes.select{ |k, _| [*Meal.attribute_names, 'ingredients_attributes'].include?(k) }
+  def assign_attributes(new_attributes)
+    extract_ingredients_action_args(new_attributes)
+    super
   end
 
   def save(*args)
-    return false if @new_ingredient || @create_ingredient
+    # don't save yet if we're coming if we're about to start/finishing an ingredient edit
+    return false if @ingredient_index
     super
+  end
+
+  private
+
+  def extract_ingredients_action_args(new_attributes)
+    (new_attributes[:ingredients_attributes] || []).each do |index, ingredient_attributes|
+      extract_ingredient_action_args(index, ingredient_attributes)
+    end
+  end
+
+  def extract_ingredient_action_args(index, ingredients_attributes)
+    %w(edit update).each do |action|
+      if ingredients_attributes.delete(action)
+        @ingredient_index = index.to_i
+        @ingredient_action = action.to_sym
+      end
+    end
   end
 end

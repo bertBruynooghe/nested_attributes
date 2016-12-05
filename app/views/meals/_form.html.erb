@@ -24,7 +24,7 @@
     <% end %>
   </ul>
 
-  <%= meal_form.submit name: 'meal[new_ingredient]', value: 'new ingredient' %>
+  <%= meal_form.submit name: "meal[ingredients_attributes][#{meal.ingredients.length}][edit]", value: 'new ingredient' %>
 
   <div class="actions">
       <%= meal_form.submit %>

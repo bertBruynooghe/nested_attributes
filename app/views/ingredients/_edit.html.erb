@@ -1,0 +1,15 @@
+<h2>Edit Ingredient</h2>
+
+<%= form_for(meal) do |meal_form| %>
+  <%= meal_form.hidden_field :consumption_time %>
+  <%= meal_form.fields_for :ingredients do |ingredient_form| %>
+    <% if ingredient_form.index == meal.ingredient_index %>
+      <%= ingredient_form.label :name %>
+      <%= ingredient_form.text_field :name %>
+      <%= meal_form.submit name: "meal[ingredients_attributes][#{meal.ingredient_index}][update]", value: 'update ingredient' %>
+    <% else %>
+     <%= ingredient_form.hidden_field(:name) %>
+    <% end %>
+  <% end %>
+  <%= meal_form.submit type: :reset, value: 'reset' %>
+<% end %>

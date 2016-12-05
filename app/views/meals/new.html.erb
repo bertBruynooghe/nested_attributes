@@ -1,7 +1,7 @@
 <h1>New Meal</h1>
 
-<% if @meal.new_ingredient %>
-  <%= render 'ingredients/new', meal: @meal %>
+<% if @meal.ingredient_action == :edit %>
+  <%= render 'ingredients/edit', meal: @meal %>
 <% else %>
   <%= render 'form', meal: @meal %>
   <%= link_to 'Back', meals_path %>
