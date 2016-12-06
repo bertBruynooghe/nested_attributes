@@ -17,12 +17,15 @@
       <%= meal_form.datetime_select :consumption_time %>
   </div>
 
-  <ul>
+  <table>
     <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
-      <%= ingredient_form.hidden_field :name %>
-      <li><%= meal.ingredients[ingredient_form.index].name %></li>
+      <tr>
+        <%= ingredient_form.hidden_field :name %>
+        <td><%= meal.ingredients[ingredient_form.index].name %></td>
+        <td><%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][edit]", value: 'edit' %></td>
+      </tr>
     <% end %>
-  </ul>
+  </table>
 
   <%= meal_form.submit name: "meal[ingredients_attributes][#{meal.ingredients.length}][edit]", value: 'new ingredient' %>
 
