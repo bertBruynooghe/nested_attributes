@@ -25,12 +25,17 @@ class Meal < ApplicationRecord
     end
   end
 
-  def extract_ingredient_action_args(index, ingredients_attributes)
+  def extract_ingredient_action_args(index, ingredient_attributes)
     %w(edit update).each do |action|
-      if ingredients_attributes.delete(action)
+      if ingredient_attributes.delete(action)
         @ingredient_index = index.to_i
         @ingredient_action = action.to_sym
       end
+    end
+    if ingredient_attributes['_destroy'] && ingredient_attributes['_destroy'] != 'true'
+      ingredient_attributes['_destroy'] = 'true'
+      @ingredient_index = index.to_i
+      @ingredient_action = :_destroy
     end
   end
 end

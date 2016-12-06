@@ -17,15 +17,18 @@
       <%= meal_form.datetime_select :consumption_time %>
   </div>
 
-  <table>
-    <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
-      <tr>
+  <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
+    <% if meal.ingredients[ingredient_form.index]._destroy %>
+      <%= ingredient_form.hidden_field :_destroy %>
+    <% else %>
+      <p>
         <%= ingredient_form.hidden_field :name %>
-        <td><%= meal.ingredients[ingredient_form.index].name %></td>
-        <td><%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][edit]", value: 'edit' %></td>
-      </tr>
+        <%= meal.ingredients[ingredient_form.index].name %>
+        <%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][edit]", value: 'edit' %>
+        <%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][_destroy]", value: 'delete' %>
+      </p>
     <% end %>
-  </table>
+  <% end %>
 
   <%= meal_form.submit name: "meal[ingredients_attributes][#{meal.ingredients.length}][edit]", value: 'new ingredient' %>
 
