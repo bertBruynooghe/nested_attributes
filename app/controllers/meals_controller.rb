@@ -14,17 +14,18 @@ class MealsController < ApplicationController
 
   # GET /meals/new
   def new
-    @meal = Meal.new
+    @meal = Forms::Meal.new({})
   end
 
   # GET /meals/1/edit
   def edit
+    @meal = Forms::Meal.new(@meal)
   end
 
   # POST /meals
   # POST /meals.json
   def create
-    @meal = Meal.new(meal_params)
+    @meal = Forms::Meal.new(meal_params)
     respond_to do |format|
       if @meal.save
         format.html { redirect_to @meal, notice: 'Meal was successfully created.' }
@@ -39,6 +40,7 @@ class MealsController < ApplicationController
   # PATCH/PUT /meals/1
   # PATCH/PUT /meals/1.json
   def update
+    @meal = Forms::Meal.new(@meal)
     @meal.assign_attributes(meal_params)
     respond_to do |format|
       if @meal.save(meal_params)
