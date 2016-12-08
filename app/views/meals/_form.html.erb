@@ -24,8 +24,8 @@
       <p>
         <%= ingredient_form.hidden_field :name %>
         <%= meal.ingredients[ingredient_form.index].name %>
-        <%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][edit]", value: 'edit' %>
-        <%= meal_form.submit name: "meal[ingredients_attributes][#{ingredient_form.index}][_destroy]", value: 'delete' %>
+        <%= ingredient_form.button 'edit', type: :submit, name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]", value: :edit   %>
+        <%= ingredient_form.button 'delete', type: :submit, name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]", value: :delete %>
       </p>
     <% end %>
   <% end %>

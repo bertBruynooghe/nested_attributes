@@ -15,6 +15,7 @@ module Forms
     # custom behaviour of the Forms::Meal
     def assign_attributes(new_attributes)
       extract_ingredients_action_args(new_attributes)
+      new_attributes[:ingredients_attributes][ingredient_index.to_s][:_destroy] = '1' if ingredient_action == :delete
       @meal.assign_attributes(new_attributes)
     end
 
@@ -49,19 +50,9 @@ module Forms
     end
 
     def extract_ingredient_action_args(index, ingredient_attributes)
-      %w(edit update).each do |action|
-        if ingredient_attributes.delete(action)
-          @ingredient_index = index.to_i
-          @ingredient_action = action.to_sym
-        end
-      end
-
-      # when coming from the new/edit ingredients dialog, the value of the _destroy attribute can be the label of the delete button
-      # we're using this value to discern between values that were set before or newly set values to see where the submit is coming from
-      if ingredient_attributes['_destroy'] && ingredient_attributes['_destroy'] != 'true'
-        ingredient_attributes['_destroy'] = 'true'
+      if value = ingredient_attributes.delete('commit')
         @ingredient_index = index.to_i
-        @ingredient_action = :_destroy
+        @ingredient_action = value.to_sym
       end
     end
   end
