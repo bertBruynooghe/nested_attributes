@@ -9,6 +9,7 @@
       <%= ingredient_form.button name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
     <% else %>
      <%= ingredient_form.hidden_field(:name) %>
+     <%= ingredient_form.hidden_field(:_destroy) %>
     <% end %>
   <% end %>
   <%= meal_form.submit type: :reset, value: 'reset' %>
