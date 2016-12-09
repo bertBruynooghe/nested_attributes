@@ -1,16 +1,3 @@
 <h2>Edit Ingredient</h2>
 
-<%= form_for(meal) do |meal_form| %>
-  <%= render 'ingredients/meal_cache', meal_form: meal_form %>
-  <%= fields_for "meal[ingredients_attributes][#{meal.ingredient_index}]", ingredient do |ingredient_form| %>
-     <%= ingredient_form.label :name %>
-     <%= ingredient_form.text_field :name %>
-     <%= ingredient_form.button name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
-  <% end %>
-<% end %>
-
-<%# cancel form %>
-<%= form_for(meal) do |meal_form| %>
-  <%= render 'ingredients/meal_cache', meal_form: meal_form %>
-  <%= meal_form.button 'Back', name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
-<% end %>
+<%= render 'ingredients/form', meal: meal, ingredient: ingredient, action: :update %>
