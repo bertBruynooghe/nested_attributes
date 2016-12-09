@@ -15,7 +15,9 @@ module Forms
     # custom behaviour of the Forms::Meal
     def assign_attributes(new_attributes)
       extract_ingredients_action_args(new_attributes)
-      new_attributes[:ingredients_attributes][ingredient_index.to_s][:_destroy] = '1' if ingredient_action == :delete
+      if ingredient_action == :delete
+        new_attributes[:ingredients_attributes][ingredient_index.to_s][:_destroy] = '1'
+      end
       @meal.assign_attributes(new_attributes)
     end
 

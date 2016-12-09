@@ -24,13 +24,20 @@
       <p>
         <%= ingredient_form.hidden_field :name %>
         <%= meal.ingredients[ingredient_form.index].name %>
-        <%= ingredient_form.button 'edit', type: :submit, name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]", value: :edit   %>
-        <%= ingredient_form.button 'delete', type: :submit, name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]", value: :delete %>
+        <%= ingredient_form.button "Edit #{Ingredient.model_name.human}",
+                                   name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]",
+                                   value: :edit   %>
+        <%= ingredient_form.button "Delete #{Ingredient.model_name.human}",
+                                   name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]",
+                                   value: :delete,
+                                   data: { confirm: 'Are you sure?' } %>
       </p>
     <% end %>
   <% end %>
 
-  <%= meal_form.button 'new ingredient', name: "meal[ingredients_attributes][#{meal.ingredients.length}][commit]", value: :new %>
+  <%= meal_form.button "New #{Ingredient.model_name.human}",
+                        name: "meal[ingredients_attributes][#{meal.ingredients.length}][commit]",
+                        value: :new %>
 
   <div class="actions">
       <%= meal_form.submit %>
