@@ -30,7 +30,7 @@
     <% end %>
   <% end %>
 
-  <%= meal_form.button 'new ingredient', name: "meal[ingredients_attributes][#{meal.ingredients.length}][commit]", value: :edit %>
+  <%= meal_form.button 'new ingredient', name: "meal[ingredients_attributes][#{meal.ingredients.length}][commit]", value: :new %>
 
   <div class="actions">
       <%= meal_form.submit %>

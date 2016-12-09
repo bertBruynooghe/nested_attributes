@@ -1,16 +1,16 @@
 <h2>Edit Ingredient</h2>
 
 <%= form_for(meal) do |meal_form| %>
-  <%= meal_form.hidden_field :consumption_time %>
-  <%= meal_form.fields_for :ingredients do |ingredient_form| %>
-    <% if ingredient_form.index == meal.ingredient_index %>
-      <%= ingredient_form.label :name %>
-      <%= ingredient_form.text_field :name %>
-      <%= ingredient_form.button name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
-    <% else %>
-     <%= ingredient_form.hidden_field(:name) %>
-     <%= ingredient_form.hidden_field(:_destroy) %>
-    <% end %>
+  <%= render 'ingredients/meal_cache', meal_form: meal_form %>
+  <%= fields_for "meal[ingredients_attributes][#{meal.ingredient_index}]", ingredient do |ingredient_form| %>
+     <%= ingredient_form.label :name %>
+     <%= ingredient_form.text_field :name %>
+     <%= ingredient_form.button name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
   <% end %>
-  <%= meal_form.submit type: :reset, value: 'reset' %>
+<% end %>
+
+<%# cancel form %>
+<%= form_for(meal) do |meal_form| %>
+  <%= render 'ingredients/meal_cache', meal_form: meal_form %>
+  <%= meal_form.button 'Back', name: "meal[ingredients_attributes][#{meal.ingredient_index}][commit]", type: :submit, value: :update %>
 <% end %>

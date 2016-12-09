@@ -21,7 +21,7 @@ module Forms
 
     def save(*args)
       # don't save yet if we're coming if we're about to start/finishing an ingredient edit
-      return false if @ingredient_index
+      return false unless @ingredient_index.nil?
       @meal.save
     end
 
