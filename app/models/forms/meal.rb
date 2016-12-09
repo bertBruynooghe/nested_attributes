@@ -44,8 +44,8 @@ module Forms
     attr_reader :meal
 
     def extract_ingredients_action_args(new_attributes)
-      (new_attributes[:ingredients_attributes] || []).each do |index, ingredient_attributes|
-        extract_ingredient_action_args(index, ingredient_attributes)
+      (new_attributes[:ingredients_attributes] || {}).reject! do |index, ingredient_attributes|
+        extract_ingredient_action_args(index, ingredient_attributes).empty?
       end
     end
 
@@ -54,6 +54,7 @@ module Forms
         @ingredient_index = index.to_i
         @ingredient_action = value.to_sym
       end
+      ingredient_attributes
     end
   end
 end
