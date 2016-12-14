@@ -18,11 +18,14 @@
   </div>
 
   <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
-    <% if meal.ingredients[ingredient_form.index]._destroy %>
-      <%= ingredient_form.hidden_field :_destroy %>
-    <% else %>
+    <% %i(name _destroy).each |s| %>
+      <%= ingredient_form.hidden_field i %>
+    <% end %>  
+  <% end %>
+
+  <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
+    <% unless meal.ingredients[ingredient_form.index]._destroy %>
       <p>
-        <%= ingredient_form.hidden_field :name %>
         <%= meal.ingredients[ingredient_form.index].name %>
         <%= ingredient_form.button "Edit #{Ingredient.model_name.human}",
                                    name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]",
