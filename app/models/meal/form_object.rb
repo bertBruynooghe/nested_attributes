@@ -31,6 +31,10 @@ module Meal
       ingredients[@form_object.ingredient_index] || Ingredient.new
     end
 
+    def selected_ingredient_present?
+      ingredients[@form_object.ingredient_index].present?
+    end
+
     def self.find(*args)
       new(Meal.find(*args))
     end

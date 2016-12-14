@@ -3,9 +3,9 @@
   <%= fields_for "meal[ingredients_attributes][#{form_object.ingredient_index}]", meal_form.selected_ingredient do |ingredient_form| %>
      <%= ingredient_form.label :name %>
      <%= ingredient_form.text_field :name %>
-     <%= ingredient_form.button t("helpers.submit.#{action}", model: Ingredient.model_name.human),
+     <%= ingredient_form.button t("helpers.submit.#{form_object.selected_ingredient_present? ? :update : :create}", model: Ingredient.model_name.human),
                                 name: "meal[ingredients_attributes][#{form_object.ingredient_index}][commit]",
-                                value: action %>
+                                value: form_object.selected_ingredient_present? ? :update : :create %>
   <% end %>
 <% end %>
 
