@@ -1,10 +1,8 @@
-<h1>New Meal</h1>
-
-<% if %i(edit new).include? @meal.ingredient_action %>
-  <%= render 'ingredients/edit',
-             meal: @meal,
-             ingredient: @meal.ingredients[@meal.ingredient_index] || Ingredient.new %>
+<% if %i(edit new).include? @form_object.ingredient_action %>
+  <%= render "ingredients/#{@form_object.ingredient_action}",
+             form_object: @form_object,
+             ingredient: @form_object.ingredients[@form_object.ingredient_index] || Ingredient.new %>
 <% else %>
-  <%= render 'form', meal: @meal %>
+  <%= render 'form', form_object: @form_object %>
   <%= link_to 'Back', meals_path %>
 <% end %>

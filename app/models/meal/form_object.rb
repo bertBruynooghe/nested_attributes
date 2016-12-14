@@ -1,38 +1,42 @@
-module Forms
-  class Meal
+module Meal
+  class FormObject
     attr_reader :ingredient_index
     attr_reader :ingredient_action
 
     def initialize(meal_or_attributes)
-      if meal_or_attributes.is_a?(::Meal)
-        @meal = meal_or_attributes
+      if meal_or_attributes.is_a?(::FormObject)
+        @form_object = meal_or_attributes
       else
-        @meal = ::Meal.new
+        @form_object = ::FormObject.new
         assign_attributes(meal_or_attributes)
       end
     end
 
-    # custom behaviour of the Forms::Meal
+    # custom behaviour of the Meal::FormObject
     def assign_attributes(new_attributes)
       extract_ingredients_action_args(new_attributes)
       if ingredient_action == :delete
         new_attributes[:ingredients_attributes][ingredient_index.to_s][:_destroy] = '1'
       end
-      @meal.assign_attributes(new_attributes)
+      @form_object.assign_attributes(new_attributes)
     end
 
     def save(*args)
       # don't save yet if we're coming if we're about to start/finishing an ingredient edit
       return false unless @ingredient_index.nil?
-      @meal.save
+      @form_object.save
+    end
+
+    def self.find(*args)
+      new(Meal.find(*args))
     end
 
     def method_missing(method, *args)
-      @meal.send(method, *args)
+      @form_object.send(method, *args)
     end
 
     def self.method_missing(method, *args)
-      ::Meal.send(method, *args)
+      ::FormObject.send(method, *args)
     end
 
     # needed for proper form submission path in form view

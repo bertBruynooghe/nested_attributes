@@ -1,11 +1,11 @@
-<%= form_for(meal) do |meal_form| %>
-  <% if meal.errors.any? %>
+<%= form_for(form_object) do |meal_form| %>
+  <% if form_object.errors.any? %>
     <div id="error_explanation">
-        <h2><%= pluralize(meal.errors.count, "error") %>
+        <h2><%= pluralize(form_object.errors.count, "error") %>
             prohibited this meal from being saved:</h2>
 
         <ul>
-            <% meal.errors.full_messages.each do |message| %>
+            <% form_object.errors.full_messages.each do |message| %>
             <li><%= message %></li>
             <% end %>
         </ul>
@@ -20,13 +20,13 @@
   <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
     <% %i(name _destroy).each |s| %>
       <%= ingredient_form.hidden_field i %>
-    <% end %>  
+    <% end %>
   <% end %>
 
   <%= meal_form.fields_for(:ingredients) do |ingredient_form| %>
-    <% unless meal.ingredients[ingredient_form.index]._destroy %>
+    <% unless form_object.ingredients[ingredient_form.index]._destroy %>
       <p>
-        <%= meal.ingredients[ingredient_form.index].name %>
+        <%= form_object.ingredients[ingredient_form.index].name %>
         <%= ingredient_form.button "Edit #{Ingredient.model_name.human}",
                                    name: "meal[ingredients_attributes][#{ingredient_form.index}][commit]",
                                    value: :edit   %>
@@ -39,7 +39,7 @@
   <% end %>
 
   <%= meal_form.button "New #{Ingredient.model_name.human}",
-                        name: "meal[ingredients_attributes][#{meal.ingredients.length}][commit]",
+                        name: "meal[ingredients_attributes][#{form_object.ingredients.length}][commit]",
                         value: :new %>
 
   <div class="actions">
