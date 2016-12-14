@@ -27,6 +27,10 @@ module Meal
       @form_object.save
     end
 
+    def selected_ingredient
+      ingredients[@form_object.ingredient_index] || Ingredient.new
+    end
+
     def self.find(*args)
       new(Meal.find(*args))
     end
