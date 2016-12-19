@@ -1,9 +1,12 @@
-module Meal
+class Meal
   class FormObject
+    # TODO: will probably have to extract selected_ingredient functionality
+
     attr_reader :ingredient_index
     attr_reader :ingredient_action
+    attr_reader :meal
 
-    def initialize(meal_or_attributes)
+    def initialize(meal_or_attributes = {})
       if meal_or_attributes.is_a?(::FormObject)
         @form_object = meal_or_attributes
       else
@@ -28,11 +31,11 @@ module Meal
     end
 
     def selected_ingredient
-      ingredients[@form_object.ingredient_index] || Ingredient.new
+      ingredients[ingredient_index] || Ingredient.new
     end
 
     def selected_ingredient_present?
-      ingredients[@form_object.ingredient_index].present?
+      ingredients[ingredient_index].present?
     end
 
     def self.find(*args)

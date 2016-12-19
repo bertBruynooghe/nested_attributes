@@ -40,7 +40,7 @@ class MealsController < ApplicationController
   # PATCH/PUT /meals/1
   # PATCH/PUT /meals/1.json
   def update
-    @form_object = Meal::FormObject.Meal.find(params[:id])
+    @form_object = Meal::FormObject.find(params[:id])
     @form_object.assign_attributes(form_object_params)
     respond_to do |format|
       if @form_object.save(form_object_params)
